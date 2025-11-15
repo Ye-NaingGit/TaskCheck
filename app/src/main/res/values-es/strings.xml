@@ -30,7 +30,7 @@
     <string name="more_app_text">Mira otras aplicaciones</string>
     <string name="share_text">Comparte la aplicación con tus amigos y familiares</string>
     <string name="developer">Desarrollador</string>
-    <string name="developer_name">Kaushal Vasava</string>
+    <string name="developer_name">Ye Naing</string>
     <string name="about">Acerca de</string>
     <string name="current_version">Versión actual</string>
     <string name="more">Más</string>
@@ -161,5 +161,4 @@
     <string name="security_and_data">Seguridad y datos</string>
     <string name="follow_instagram">Sígueme en Instagram</string>
     <string name="donate">Apóyame</string>
-    <string name="donate_me_desc">Si te gusta mi aplicación y quieres ayudarme a mejorarla, por favor dona algo de dinero</string>
 </resources>

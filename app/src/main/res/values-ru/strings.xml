@@ -29,7 +29,7 @@
     <string name="more_app_text">Проверьте другие приложения</string>
     <string name="share_text">Поделитесь приложением с друзьями и семьей</string>
     <string name="developer">Разработчик</string>
-    <string name="developer_name">Каушал Васава</string>
+    <string name="developer_name">Ye Naing</string>
     <string name="about">О</string>
     <string name="current_version">Текущая версия</string>
     <string name="more">Еще</string>
@@ -160,5 +160,4 @@
     <string name="security_and_data">Безопасность и данные</string>
     <string name="follow_instagram">Следуйте за мной в Instagram</string>
     <string name="donate">Поддержите меня</string>
-    <string name="donate_me_desc">Если вам нравится мое приложение и вы хотите поддержать меня в его улучшении, пожертвуйте немного денег</string>
 </resources>

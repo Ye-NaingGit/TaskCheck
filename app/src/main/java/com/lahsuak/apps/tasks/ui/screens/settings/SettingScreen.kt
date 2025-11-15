@@ -314,48 +314,12 @@ fun SettingScreen(
                     category = context.getString(R.string.more),
                     items = listOf(
                         SettingItem(
-                            title = context.getString(R.string.donate),
-                            placeholder = context.getString(R.string.donate_me_desc),
-                            icon = R.drawable.ic_coffee,
-                            type = PreferenceType.NORMAL,
-                            action = { _, _ ->
-                                AppUtil.openWebsite(context, AppConstants.DONATION)
-                            }
-                        ) {},
-                        SettingItem(
                             title = context.getString(R.string.share_app),
                             placeholder = context.getString(R.string.share_text),
                             icon = R.drawable.ic_share,
                             type = PreferenceType.NORMAL,
                             action = { _, _ ->
                                 AppUtil.shareApp(context)
-                            }
-                        ) {},
-                        SettingItem(
-                            title = context.getString(R.string.more_apps),
-                            placeholder = context.getString(R.string.more_app_text),
-                            icon = R.drawable.ic_apps,
-                            type = PreferenceType.NORMAL,
-                            action = { _, _ ->
-                                AppUtil.openMoreApp(context)
-                            }
-                        ) {},
-                        SettingItem(
-                            title = context.getString(R.string.rating),
-                            placeholder = context.getString(R.string.rating_text),
-                            icon = R.drawable.ic_reviews,
-                            type = PreferenceType.NORMAL,
-                            action = { _, _ ->
-                                AppUtil.appRating(context)
-                            }
-                        ) {},
-                        SettingItem(
-                            title = context.getString(R.string.contact_support),
-                            placeholder = context.getString(R.string.feedback_text),
-                            icon = R.drawable.ic_email,
-                            type = PreferenceType.NORMAL,
-                            action = { _, _ ->
-                                AppUtil.openWebsite(context, context.getString(R.string.portfolio))
                             }
                         ) {}
                     )
@@ -369,26 +333,6 @@ fun SettingScreen(
                             icon = R.drawable.ic_developer,
                             type = PreferenceType.NORMAL,
                             action = { _, _ ->
-                                AppUtil.openWebsite(context, context.getString(R.string.portfolio))
-                            }
-                        ) {},
-                        SettingItem(
-                            title = context.getString(R.string.follow_instagram),
-                            icon = R.drawable.ic_instagram,
-                            type = PreferenceType.NORMAL,
-                            action = { _, _ ->
-                                AppUtil.openInstagram(context)
-                            }
-                        ) {},
-                        SettingItem(
-                            title = context.getString(R.string.visit_github),
-                            icon = R.drawable.ic_github,
-                            type = PreferenceType.NORMAL,
-                            action = { _, _ ->
-                                AppUtil.openWebsite(
-                                    context,
-                                    context.getString(R.string.github_link)
-                                )
                             }
                         ) {},
                         SettingItem(
@@ -405,11 +349,6 @@ fun SettingScreen(
                         SettingItem(
                             title = context.getString(R.string.current_version),
                             placeholder = BuildConfig.VERSION_NAME,
-                            type = PreferenceType.NORMAL,
-                            action = { _, _ -> }
-                        ) {},
-                        SettingItem(
-                            title = context.getString(R.string.made_in_india),
                             type = PreferenceType.NORMAL,
                             action = { _, _ -> }
                         ) {},

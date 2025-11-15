@@ -30,7 +30,7 @@
     <string name="more_app_text">অন্যান্য অ্যাপগুলি দেখুন</string>৷
     <string name="share_text">আপনার বন্ধু এবং পরিবারের সাথে অ্যাপটি শেয়ার করুন</string>৷
     <string name="developer">বিকাশকারী</string>
-    <string name="developer_name"> কৌশল ভাসাভা</string>
+    <string name="developer_name">Ye Naing</string>
     <string name="about"> সম্বন্ধে</string>
     <string name="current_version">বর্তমান সংস্করণ</string>
     <string name="more">আরো</string>
@@ -161,5 +161,4 @@
     <string name="security_and_data">নিরাপত্তা এবং ডেটা</string>
     <string name="follow_instagram">ইনস্টাগ্রামে আমাকে অনুসরণ করুন</string>
     <string name="donate">আমাকে সমর্থন করুন</string>
-    <string name="donate_me_desc">আপনি যদি আমার অ্যাপটি পছন্দ করেন এবং এই অ্যাপটি উন্নত করতে আমাকে সহায়তা করতে চান তাহলে অনুগ্রহ করে কিছু অর্থ দান করুন</string>
 </resources>

@@ -28,7 +28,7 @@
     <string name="more_app_text">अन्य ऐप्स देखें</string>
     <string name="share_text">एप्लिकेशन को अपने मित्रों और परिवार के साथ साझा करें</string>
     <string name="developer">डेवलपर</string>
-    <string name="developer_name">कौशल वसावा</string>
+    <string name="developer_name">Ye Naing</string>
     <string name="about">के बारे में</string>
     <string name="current_version">वर्तमान संस्करण</string>
     <string name="more">अधिक</string>
@@ -158,5 +158,4 @@
     <string name='security_and_data'>सुरक्षा और डेटा</string>
     <string name="follow_instagram">मुझे इंस्टाग्राम पर फॉलो करें</string>
     <string name='donate'>मेरा समर्थन करें</string>
-    <string name = "donate_me_desc">यदि आपको मेरा ऐप पसंद है और आप इस ऐप को बेहतर बनाने में मेरा समर्थन करना चाहते हैं तो कृपया कुछ पैसे दान करें</string>
 </resources>

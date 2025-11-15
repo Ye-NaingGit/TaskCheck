@@ -28,7 +28,7 @@
     <string name="more_app_text">다른 앱 확인</string>
     <string name="share_text">친구 및 가족과 앱 공유</string>
     <string name="developer">개발자</string>
-    <string name="developer_name">카우샬 바사바</string>
+    <string name="developer_name">Ye Naing</string>
     <string name="about">정보</string>
     <string name="current_version">현재 버전</string>
     <string name="more">더</string>
@@ -158,5 +158,4 @@
     <string name="security_and_data">보안 및 데이터</string>
     <string name="follow_instagram">인스타그램에서 나를 팔로우하세요</string>
     <string name="donate">저를 응원해주세요</string>
-    <string name="donate_me_desc">내 앱이 마음에 들고 이 앱을 개선하는 데 도움을 주고 싶다면 돈을 기부해 주세요</string>
 </resources>
