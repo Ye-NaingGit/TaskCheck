@@ -165,4 +165,9 @@
     <string name="follow_instagram">Follow me on the Instagram</string>
     <string name="donate">Support me</string>
 
+    <string name="priority" translatable="false">Priority ↑</string>
+    <string name="priority_desc" translatable="false">Priority ↓</string>
+    <string name="priority_low" translatable="false">Low</string>
+    <string name="priority_medium" translatable="false">Medium</string>
+    <string name="priority_high" translatable="false">High</string>
 </resources>

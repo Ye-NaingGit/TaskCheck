@@ -23,9 +23,7 @@ import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.background
-import androidx.glance.layout.Row
 import androidx.glance.layout.padding
-import androidx.glance.text.Text
 import com.lahsuak.apps.tasks.R
 import com.lahsuak.apps.tasks.ui.MainActivity
 import com.lahsuak.apps.tasks.ui.theme.lightBlue

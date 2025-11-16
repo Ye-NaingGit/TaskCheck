@@ -25,36 +25,56 @@ interface TaskDao {
             SortOrder.BY_DATE_DESC -> getAllTaskByDateDesc(query)
             SortOrder.BY_CATEGORY -> getAllTaskByCategory(query)
             SortOrder.BY_CATEGORY_DESC -> getAllTaskByCategoryDesc(query)
+            SortOrder.BY_PRIORITY -> getAllTaskByPriority(query)
+            SortOrder.BY_PRIORITY_DESC -> getAllTaskByPriorityDesc(query)
         }
 
     @Query(
-        "SELECT * FROM task_table WHERE title LIKE '%' || :searchQuery || '%' ORDER BY importance DESC,title ASC"
+        """
+    SELECT * FROM task_table
+    WHERE title LIKE '%' || :searchQuery || '%'
+    ORDER BY priority DESC, importance DESC, start_date ASC
+    """
+    )
+    fun getAllTaskByPriority(searchQuery: String): Flow<List<Task>>
+
+    @Query(
+        """
+    SELECT * FROM task_table
+    WHERE title LIKE '%' || :searchQuery || '%'
+    ORDER BY priority ASC, importance DESC, start_date ASC
+    """
+    )
+    fun getAllTaskByPriorityDesc(searchQuery: String): Flow<List<Task>>
+
+    @Query(
+        "SELECT * FROM task_table WHERE title LIKE '%' || :searchQuery || '%'  ORDER BY priority DESC, importance DESC,title ASC"
     )
     fun getAllTaskByName(searchQuery: String): Flow<List<Task>>
 
     @Query(
-        "SELECT * FROM task_table WHERE title LIKE '%' || :searchQuery || '%' ORDER BY importance DESC,title DESC"
+        "SELECT * FROM task_table WHERE title LIKE '%' || :searchQuery || '%' ORDER BY priority DESC, importance DESC,title DESC"
     )
     fun getAllTaskByNameDesc(searchQuery: String): Flow<List<Task>>
 
     //date DESC
     @Query(
-        "SELECT * FROM task_table WHERE title LIKE '%' || :searchQuery || '%' ORDER BY importance DESC, start_date ASC"
+        "SELECT * FROM task_table WHERE title LIKE '%' || :searchQuery || '%' ORDER BY priority DESC, importance DESC, start_date ASC"
     )
     fun getAllTaskByDate(searchQuery: String): Flow<List<Task>>
 
     @Query(
-        "SELECT * FROM task_table WHERE title LIKE '%' || :searchQuery || '%' ORDER BY importance DESC, start_date DESC"
+        "SELECT * FROM task_table WHERE title LIKE '%' || :searchQuery || '%' ORDER BY priority DESC, importance DESC, start_date DESC"
     )
     fun getAllTaskByDateDesc(searchQuery: String): Flow<List<Task>>
 
     @Query(
-        "SELECT * FROM task_table WHERE title LIKE '%' || :searchQuery || '%' ORDER BY importance DESC, color ASC"
+        "SELECT * FROM task_table WHERE title LIKE '%' || :searchQuery || '%' ORDER BY priority DESC, importance DESC, color ASC"
     )
     fun getAllTaskByCategory(searchQuery: String): Flow<List<Task>>
 
     @Query(
-        "SELECT * FROM task_table WHERE title LIKE '%' || :searchQuery || '%' ORDER BY importance DESC, color DESC"
+        "SELECT * FROM task_table WHERE title LIKE '%' || :searchQuery || '%' ORDER BY priority DESC, importance DESC, color DESC"
     )
     fun getAllTaskByCategoryDesc(searchQuery: String): Flow<List<Task>>
 

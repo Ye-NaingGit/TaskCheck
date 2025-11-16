@@ -192,7 +192,9 @@ fun TaskScreen(
         stringResource(R.string.date),
         stringResource(R.string.date_desc),
         stringResource(R.string.category),
-        stringResource(R.string.category_desc)
+        stringResource(R.string.category_desc),
+        stringResource(R.string.priority),
+        stringResource(R.string.priority_desc)
     )
     val sortTypes by remember {
         mutableStateOf(sorts)

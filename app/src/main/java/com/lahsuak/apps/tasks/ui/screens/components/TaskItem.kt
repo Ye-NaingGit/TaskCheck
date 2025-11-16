@@ -80,6 +80,7 @@ fun TaskItem(
     onCompletedTask: (Boolean) -> Unit,
     onEditIconClick: (Boolean) -> Unit,
 ) {
+
     val isLandScape =
         LocalConfiguration.current.screenHeightDp < LocalConfiguration.current.screenWidthDp
     val color = Color(TaskApp.categoryTypes[task.color].color)
@@ -240,6 +241,12 @@ fun SwipeItem(
 ) {
     val context = LocalContext.current
 
+    val (priorityLabel, priorityColor) = when (task.priority) {
+        2 -> stringResource(R.string.priority_high) to Color(0xFFD32F2F)   // High: red
+        1 -> stringResource(R.string.priority_medium) to Color(0xFFF9A825) // Medium: amber
+        else -> stringResource(R.string.priority_low) to Color(0xFF388E3C) // Low: green
+    }
+
     Column(
         modifier
             .fillMaxWidth()
@@ -309,6 +316,29 @@ fun SwipeItem(
                             }
                         }
                     }
+
+                    Row(
+                        modifier = Modifier
+                            .padding(start = 8.dp, top = 4.dp, end = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(8.dp)
+                                .clip(CircleShape)
+                                .background(priorityColor)
+                        )
+
+                        Spacer(modifier = Modifier.width(4.dp))
+
+                        Text(
+                            text = priorityLabel,
+                            fontSize = 10.sp,
+                            color = priorityColor,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+
                     if (showSubTask && task.subTaskList != null) {
                         AnimatedVisibility(visible = isExpanded) {
                             Text(

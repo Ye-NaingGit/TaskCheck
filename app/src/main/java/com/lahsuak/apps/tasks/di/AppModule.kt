@@ -73,6 +73,13 @@ object AppModule {
 
             }
         }
+        val migration4To5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "ALTER TABLE task_table ADD COLUMN priority INTEGER NOT NULL DEFAULT 1"
+                )
+            }
+        }
         return Room.databaseBuilder(
             app,
             TaskDatabase::class.java,
@@ -81,6 +88,7 @@ object AppModule {
             .addMigrations(migration1To2)
             .addMigrations(migration2To3)
             .addMigrations(migration3To4)
+            .addMigrations(migration4To5)
             .fallbackToDestructiveMigration()
             .build()
     }

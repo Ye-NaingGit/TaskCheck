@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
@@ -73,6 +72,10 @@ import com.lahsuak.apps.tasks.util.DateUtil
 import com.lahsuak.apps.tasks.util.rememberWindowSize
 import com.lahsuak.apps.tasks.util.toast
 
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AddUpdateTaskScreen(
@@ -110,6 +113,10 @@ fun AddUpdateTaskScreen(
         mutableStateOf(task?.isImp ?: false)
     }
 
+    var priority by rememberSaveable {
+        mutableIntStateOf(task?.priority ?: 1)   // default 1 = medium
+    }
+
     var startDate by rememberSaveable {
         mutableStateOf(task?.startDate?.let { DateUtil.getDate(it) } ?: "")
     }
@@ -127,6 +134,19 @@ fun AddUpdateTaskScreen(
         mutableIntStateOf(task?.color ?: 0)
     }
 
+    // 🔹 FIX: sync UI state when the real task finishes loading
+    LaunchedEffect(task?.id) {
+        if (!isNewTask && task != null) {
+            title = task!!.title
+            isImp = task!!.isImp
+            priority = task!!.priority
+            startDate = task!!.startDate?.let { DateUtil.getDate(it) } ?: ""
+            endDate = task!!.endDate?.let { DateUtil.getDate(it) } ?: ""
+            selectedCategory = task!!.color
+            reminder = task!!.reminder
+        }
+    }
+
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
 
     if (sheetState?.isVisible == false) {
@@ -138,6 +158,7 @@ fun AddUpdateTaskScreen(
         reminder = null
         isDropDownExpanded = false
         selectedCategory = 0
+        priority = 1
         onBottomSheetClick()
     }
     BackHandler(true) {
@@ -149,6 +170,7 @@ fun AddUpdateTaskScreen(
         reminder = null
         isDropDownExpanded = false
         selectedCategory = 0
+        priority = 1
         onBottomSheetClick()
     }
 
@@ -186,17 +208,35 @@ fun AddUpdateTaskScreen(
             }
         )
         Row(
-            Modifier.clip(RoundedCornerShape(8.dp)),
+            Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp)),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            CheckBoxWithText(
-                text = stringResource(R.string.important_task),
-                value = isImp,
-                onValueChange = { isImp = it },
-                fontSize = 12.sp,
-                modifier = Modifier.padding(start = 4.dp)
-            )
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                CheckBoxWithText(
+                    text = stringResource(R.string.important_task),
+                    value = isImp,
+                    onValueChange = { isImp = it },
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(start = 4.dp)
+                )
+
+                Text(
+                    text = "Priority",   // or stringResource(R.string.priority) if you prefer
+                    style = MaterialTheme.typography.labelMedium,
+                    modifier = Modifier.padding(start = 8.dp, top = 8.dp, bottom = 4.dp)
+                )
+
+                PrioritySelector(
+                    selectedPriority = priority,
+                    onPriorityChange = { newPriority -> priority = newPriority }
+                )
+            }
+
             TextButton(onClick = {
                 AppUtil.setClipboard(context, title)
             }) {
@@ -394,6 +434,7 @@ fun AddUpdateTaskScreen(
                                         title = title.trim(),
                                         isImp = isImp,
                                         reminder = reminder,
+                                        priority = priority,
                                         endDate = calendar.timeInMillis
                                     )
                                     task = newTask
@@ -428,7 +469,8 @@ fun AddUpdateTaskScreen(
                                 id = 0,
                                 title = title.trim(),
                                 isImp = isImp,
-                                reminder = reminder
+                                reminder = reminder,
+                                priority = priority
                             )
                             AppUtil.setReminderWorkRequest(
                                 context,
@@ -455,6 +497,7 @@ fun AddUpdateTaskScreen(
                             startDate = task!!.startDate ?: System.currentTimeMillis(),
                             endDate = task!!.endDate,
                             reminder = reminder,
+                            priority = priority,
                             color = TaskApp.categoryTypes.indexOfFirst {
                                 it.order == selectedCategory
                             }
@@ -468,6 +511,7 @@ fun AddUpdateTaskScreen(
                             isImp = isImp,
                             startDate = System.currentTimeMillis(),
                             reminder = reminder,
+                            priority = priority,
                             color = TaskApp.categoryTypes.indexOfFirst {
                                 it.order == selectedCategory
                             }
@@ -490,5 +534,67 @@ fun AddUpdateTaskScreen(
                 Text(stringResource(id = R.string.save))
             }
         }
+    }
+}
+
+@Composable
+fun PrioritySelector(
+    selectedPriority: Int,
+    onPriorityChange: (Int) -> Unit
+) {
+    val labels = listOf(
+        stringResource(R.string.priority_low),
+        stringResource(R.string.priority_medium),
+        stringResource(R.string.priority_high)
+    )
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp, vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        labels.forEachIndexed { index, label ->
+            PriorityChip(
+                label = label,
+                value = index,
+                selectedPriority = selectedPriority,
+                onClick = { onPriorityChange(index) }
+            )
+        }
+    }
+}
+
+@Composable
+fun PriorityChip(
+    label: String,
+    value: Int,
+    selectedPriority: Int,
+    onClick: () -> Unit
+) {
+    val isSelected = selectedPriority == value
+
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(16.dp))
+            .border(
+                width = 1.dp,
+                color = if (isSelected) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.outline,
+                shape = RoundedCornerShape(16.dp)
+            )
+            .background(
+                if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                else Color.Transparent
+            )
+            .clickable { onClick() }
+            .padding(horizontal = 12.dp, vertical = 6.dp)
+    ) {
+        Text(
+            text = label,
+            fontSize = 12.sp,
+            color = if (isSelected) MaterialTheme.colorScheme.primary
+            else MaterialTheme.colorScheme.onSurface
+        )
     }
 }

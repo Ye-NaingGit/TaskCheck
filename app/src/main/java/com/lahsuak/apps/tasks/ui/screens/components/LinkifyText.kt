@@ -4,7 +4,6 @@ package com.lahsuak.apps.tasks.ui.screens.components
 
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
-import android.util.Patterns
 import android.widget.TextView
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

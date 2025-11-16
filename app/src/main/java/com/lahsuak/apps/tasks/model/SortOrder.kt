@@ -9,7 +9,10 @@ enum class SortOrder(val type: String) {
     BY_DATE(activityContext!!.getString(R.string.date)),
     BY_DATE_DESC(activityContext!!.getString(R.string.date_desc)),
     BY_CATEGORY(activityContext!!.getString(R.string.category)),
-    BY_CATEGORY_DESC(activityContext!!.getString(R.string.category_desc))
+    BY_CATEGORY_DESC(activityContext!!.getString(R.string.category_desc)),
+    BY_PRIORITY(activityContext!!.getString(R.string.priority)),
+    BY_PRIORITY_DESC(activityContext!!.getString(R.string.priority_desc))
+
     ;
 
     companion object {
@@ -21,6 +24,8 @@ enum class SortOrder(val type: String) {
                 3 -> BY_DATE_DESC
                 4 -> BY_CATEGORY
                 5 -> BY_CATEGORY_DESC
+                6 -> BY_PRIORITY
+                7 -> BY_PRIORITY_DESC
                 else -> {
                     throw IllegalArgumentException()
                 }
