@@ -144,6 +144,8 @@ fun TaskScreen(
         initial = StreakPreferences(currentStreak = 0, bestStreak = 0)
     )
 
+    val productivity by taskViewModel.productivityFlow.collectAsState(initial = 0)
+
     val showVoiceTask = settingsPreferences.showVoiceIcon
 
     var taskId: String? by rememberSaveable {
@@ -247,7 +249,7 @@ fun TaskScreen(
                         }
 
                         SnackbarResult.ActionPerformed -> {
-                            taskViewModel.onUndoDeleteClick(event.task)
+                            taskViewModel.onUndoDeleteClick(event.task, context)
                         }
                     }
                     isSnackBarShow = false
@@ -614,6 +616,7 @@ fun TaskScreen(
                             totalTask = tasks.size,
                             currentStreak = streak.currentStreak,
                             bestStreak = streak.bestStreak,
+                            productivity = productivity,
                             searchQuery = searchQuery,
                             onQueryChange = {
                                 searchQuery = it
@@ -709,7 +712,7 @@ fun TaskScreen(
                         ) { isDone ->
                             if (!actionMode) {
                                 if (isDone) {
-                                    taskViewModel.onTaskSwiped(task)
+                                    taskViewModel.onTaskSwiped(task, context)
                                     isSnackBarShow = true
                                 } else {
                                     taskViewModel.setTask(task)
@@ -740,6 +743,7 @@ fun HeaderContent(
     totalTask: Int,
     currentStreak: Int,
     bestStreak: Int,
+    productivity: Int,
     searchQuery: String,
     onQueryChange: (String) -> Unit,
     isListViewEnable: Boolean,
@@ -792,6 +796,29 @@ fun HeaderContent(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
+            }
+        }
+
+        // ⭐ Productivity badge
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f))
+                    .padding(horizontal = 10.dp, vertical = 4.dp)
+            ) {
+                Text(
+                    text = "⭐ Productivity: $productivity",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.secondary
+                )
             }
         }
 

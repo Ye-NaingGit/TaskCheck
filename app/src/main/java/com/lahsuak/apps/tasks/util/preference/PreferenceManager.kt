@@ -112,6 +112,14 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
             )
         }
 
+    val productivityFlow = context.dataStore.data
+        .catch { exception ->
+            if (exception is IOException) emit(emptyPreferences()) else throw exception
+        }
+        .map { preferences ->
+            preferences[PreferencesKeys.PRODUCTIVITY] ?: 0
+        }
+
     suspend fun updateSortOrder(sortOrder: SortOrder, context: Context) {
         context.dataStore.edit { preferences ->
             preferences[PreferencesKeys.SORT_ORDER] = sortOrder.name
@@ -222,6 +230,13 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
         }
     }
 
+    suspend fun updateProductivityScore(delta: Int, context: Context) {
+        context.dataStore.edit { prefs ->
+            val current = prefs[PreferencesKeys.PRODUCTIVITY] ?: 0
+            prefs[PreferencesKeys.PRODUCTIVITY] = current + delta
+        }
+    }
+
     private object PreferencesKeys {
         val SORT_ORDER = stringPreferencesKey(AppConstants.SORT_ORDER)
         val SORT_ORDER2 = stringPreferencesKey(AppConstants.SORT_ORDER2)
@@ -241,6 +256,8 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
         val CURRENT_STREAK = intPreferencesKey(AppConstants.SharedPreference.CURRENT_STREAK_KEY)
         val BEST_STREAK = intPreferencesKey(AppConstants.SharedPreference.BEST_STREAK_KEY)
         val LAST_COMPLETED_DAY = longPreferencesKey(AppConstants.SharedPreference.LAST_COMPLETED_DAY_KEY)
+
+        val PRODUCTIVITY = intPreferencesKey(AppConstants.SharedPreference.PRODUCTIVITY_KEY)
     }
 }
 

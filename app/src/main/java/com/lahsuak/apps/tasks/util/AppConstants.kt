@@ -64,9 +64,13 @@ object AppConstants {
         const val LANGUAGE_KEY = "language"
         const val FINGERPRINT_KEY = "fingerprint"
 
+        //Streak
         const val CURRENT_STREAK_KEY = "current_streak"
         const val BEST_STREAK_KEY = "best_streak"
         const val LAST_COMPLETED_DAY_KEY = "last_completed_day"
+
+        //Productivity
+        const val PRODUCTIVITY_KEY = "productivity_score"
     }
 
     object WorkManager {

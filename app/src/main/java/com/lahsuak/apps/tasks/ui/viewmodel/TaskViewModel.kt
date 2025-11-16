@@ -40,12 +40,23 @@ class TaskViewModel @Inject constructor(
     private val _streakFlow = MutableStateFlow(StreakPreferences(currentStreak = 0, bestStreak = 0))
     val streakFlow = _streakFlow.asStateFlow()
 
+    private val _productivityFlow = MutableStateFlow(0)
+    val productivityFlow = _productivityFlow.asStateFlow()
+
     init {
         viewModelScope.launch {
             preferenceManager.streakFlow
                 .distinctUntilChanged()
                 .collect { streak ->
                     _streakFlow.value = streak
+                }
+        }
+
+        viewModelScope.launch {
+            preferenceManager.productivityFlow
+                .distinctUntilChanged()
+                .collect { score ->
+                    _productivityFlow.value = score
                 }
         }
     }
@@ -79,8 +90,9 @@ class TaskViewModel @Inject constructor(
         preferenceManager.updateViewType(viewType, context)
     }
 
-    fun onTaskSwiped(task: Task) = viewModelScope.launch {
+    fun onTaskSwiped(task: Task, context: Context) = viewModelScope.launch {
         repository.deleteTask(task)
+        preferenceManager.updateProductivityScore(-3, context)
         taskEventChannel.send(TaskEvent.ShowUndoDeleteTaskMessage(task))
     }
 
@@ -94,11 +106,13 @@ class TaskViewModel @Inject constructor(
         // If the task has just been completed (false -> true), update the streak
         if (!wasDone && nowDone) {
             preferenceManager.updateStreakOnTaskCompleted(context)
+            preferenceManager.updateProductivityScore(+5, context)
         }
     }
 
-    fun onUndoDeleteClick(task: Task) = viewModelScope.launch {
+    fun onUndoDeleteClick(task: Task, context: Context) = viewModelScope.launch {
         repository.insertTask(task)
+        preferenceManager.updateProductivityScore(+3, context) // refund penalty
     }
 
     fun onDeleteAllCompletedClick() = viewModelScope.launch {
