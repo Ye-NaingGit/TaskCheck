@@ -26,6 +26,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.lahsuak.apps.tasks.util.preference.StreakPreferences
+
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
@@ -34,12 +36,29 @@ class TaskViewModel @Inject constructor(
     private val preferenceManager: PreferenceManager,
     state: SavedStateHandle,
 ) : ViewModel() {
+
+    private val _streakFlow = MutableStateFlow(StreakPreferences(currentStreak = 0, bestStreak = 0))
+    val streakFlow = _streakFlow.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            preferenceManager.streakFlow
+                .distinctUntilChanged()
+                .collect { streak ->
+                    _streakFlow.value = streak
+                }
+        }
+    }
+
     private val _taskFlow = MutableStateFlow<Task?>(null)
     val taskFlow get() = _taskFlow.asStateFlow()
     val searchQuery = state.getLiveData(SEARCH_QUERY, SEARCH_INITIAL_VALUE)
     val preferencesFlow = preferenceManager.preferencesFlow
     private val taskEventChannel = Channel<TaskEvent>()
     val tasksEvent = taskEventChannel.receiveAsFlow()
+
+
+
     val tasksFlow = combine(
         searchQuery.asFlow(), preferencesFlow
     ) { query, filterPreferences ->
@@ -65,8 +84,17 @@ class TaskViewModel @Inject constructor(
         taskEventChannel.send(TaskEvent.ShowUndoDeleteTaskMessage(task))
     }
 
-    fun onTaskCheckedChanged(task: Task, isChecked: Boolean) = viewModelScope.launch {
-        repository.updateTask(task.copy(isDone = isChecked))
+    fun onTaskCheckedChanged(task: Task, isChecked: Boolean, context: Context) = viewModelScope.launch {
+        val wasDone = task.isDone
+        val nowDone = isChecked
+
+        // Update the task status
+        repository.updateTask(task.copy(isDone = nowDone))
+
+        // If the task has just been completed (false -> true), update the streak
+        if (!wasDone && nowDone) {
+            preferenceManager.updateStreakOnTaskCompleted(context)
+        }
     }
 
     fun onUndoDeleteClick(task: Task) = viewModelScope.launch {

@@ -19,6 +19,10 @@ import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
+import kotlinx.coroutines.flow.Flow
+
 
 @Singleton
 class PreferenceManager @Inject constructor(@ApplicationContext context: Context) {
@@ -88,6 +92,23 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
                 showSubTask,
                 fingerprintEnabled,
                 language
+            )
+        }
+
+    val streakFlow: Flow<StreakPreferences> = context.dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }
+        .map { preferences ->
+            val current = preferences[PreferencesKeys.CURRENT_STREAK] ?: 0
+            val best = preferences[PreferencesKeys.BEST_STREAK] ?: 0
+            StreakPreferences(
+                currentStreak = current,
+                bestStreak = best
             )
         }
 
@@ -168,6 +189,39 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
         }
     }
 
+    suspend fun updateStreakOnTaskCompleted(context: Context) {
+        val millisPerDay = 24L * 60 * 60 * 1000
+        val todayDay = System.currentTimeMillis() / millisPerDay
+
+        context.dataStore.edit { prefs ->
+            val lastDay = prefs[PreferencesKeys.LAST_COMPLETED_DAY] ?: -1L
+            var current = prefs[PreferencesKeys.CURRENT_STREAK] ?: 0
+            var best = prefs[PreferencesKeys.BEST_STREAK] ?: 0
+
+            when {
+                lastDay == todayDay -> {
+                    // already counted today – do nothing
+                }
+                lastDay == todayDay - 1 -> {
+                    // consecutive day
+                    current += 1
+                }
+                else -> {
+                    // streak broken or first completion ever
+                    current = 1
+                }
+            }
+
+            if (current > best) {
+                best = current
+            }
+
+            prefs[PreferencesKeys.CURRENT_STREAK] = current
+            prefs[PreferencesKeys.BEST_STREAK] = best
+            prefs[PreferencesKeys.LAST_COMPLETED_DAY] = todayDay
+        }
+    }
+
     private object PreferencesKeys {
         val SORT_ORDER = stringPreferencesKey(AppConstants.SORT_ORDER)
         val SORT_ORDER2 = stringPreferencesKey(AppConstants.SORT_ORDER2)
@@ -183,6 +237,15 @@ class PreferenceManager @Inject constructor(@ApplicationContext context: Context
         val COPY = booleanPreferencesKey(AppConstants.SharedPreference.SHOW_COPY_KEY)
         val FINGERPRINT = booleanPreferencesKey(AppConstants.SharedPreference.FINGERPRINT_KEY)
         val LANGUAGE = stringPreferencesKey(AppConstants.SharedPreference.LANGUAGE_KEY)
+
+        val CURRENT_STREAK = intPreferencesKey(AppConstants.SharedPreference.CURRENT_STREAK_KEY)
+        val BEST_STREAK = intPreferencesKey(AppConstants.SharedPreference.BEST_STREAK_KEY)
+        val LAST_COMPLETED_DAY = longPreferencesKey(AppConstants.SharedPreference.LAST_COMPLETED_DAY_KEY)
     }
 }
+
+data class StreakPreferences(
+    val currentStreak: Int,
+    val bestStreak: Int
+)
 

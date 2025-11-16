@@ -116,6 +116,7 @@ import com.lahsuak.apps.tasks.util.preference.FilterPreferences
 import com.lahsuak.apps.tasks.util.preference.SettingPreferences
 import kotlinx.coroutines.launch
 import kotlin.random.Random
+import com.lahsuak.apps.tasks.util.preference.StreakPreferences
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -139,6 +140,10 @@ fun TaskScreen(
             sortOrder = SortOrder.BY_NAME, viewType = false
         )
     )
+    val streak by taskViewModel.streakFlow.collectAsState(
+        initial = StreakPreferences(currentStreak = 0, bestStreak = 0)
+    )
+
     val showVoiceTask = settingsPreferences.showVoiceIcon
 
     var taskId: String? by rememberSaveable {
@@ -605,8 +610,10 @@ fun TaskScreen(
                 item(span = StaggeredGridItemSpan.FullLine) {
                     AnimatedVisibility(!actionMode) {
                         HeaderContent(
-                            tasks.filter { it.isDone }.size,
-                            tasks.size,
+                            completedTask = tasks.filter { it.isDone }.size,
+                            totalTask = tasks.size,
+                            currentStreak = streak.currentStreak,
+                            bestStreak = streak.bestStreak,
                             searchQuery = searchQuery,
                             onQueryChange = {
                                 searchQuery = it
@@ -696,7 +703,7 @@ fun TaskScreen(
                             },
                             onCompletedTask = { isCompleted ->
                                 if (!actionMode) {
-                                    taskViewModel.onTaskCheckedChanged(task, isCompleted)
+                                    taskViewModel.onTaskCheckedChanged(task, isCompleted, context)
                                 }
                             }
                         ) { isDone ->
@@ -731,6 +738,8 @@ fun TaskScreen(
 fun HeaderContent(
     completedTask: Int,
     totalTask: Int,
+    currentStreak: Int,
+    bestStreak: Int,
     searchQuery: String,
     onQueryChange: (String) -> Unit,
     isListViewEnable: Boolean,
@@ -751,6 +760,41 @@ fun HeaderContent(
     val width = LocalConfiguration.current.screenWidthDp.dp
 
     Column(modifier) {
+        // 🔥 Streak badge
+        if (currentStreak > 0 || bestStreak > 0) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
+                        .padding(horizontal = 10.dp, vertical = 4.dp)
+                ) {
+                    Text(
+                        text = "🔥 Streak: $currentStreak day${if (currentStreak == 1) "" else "s"}",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                if (bestStreak > 0) {
+                    Text(
+                        text = "Best: $bestStreak",
+                        fontSize = 11.sp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
+
         if (totalTask > 0) {
             LinearProgressStatus(
                 modifier = Modifier.clickable {
