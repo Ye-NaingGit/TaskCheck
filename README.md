@@ -1,5 +1,5 @@
 # Task App
-Tasks app is todo list, planner & task app for managing and organizing your daily tasks, to-do lists, notes, reminders, checklists, calendar events, grocery lists, and much more.
+TaskCheck app is todo list, planner & task app for managing and organizing your daily tasks, to-do lists, notes, reminders, checklists, calendar events, grocery lists, and much more.
 
 # Screenshots
 
@@ -14,6 +14,8 @@ Tasks app is todo list, planner & task app for managing and organizing your dail
 
 🔗🌐📞Link to Open URL and Call
 
+Keep streaks and productivity scores to encourage task completion
+
 📈 Progress View
 
 🌐 Multi-Language supports
@@ -27,7 +29,6 @@ Tasks app is todo list, planner & task app for managing and organizing your dail
 ⏰🔔 Reminders & Notifications:
 
 🅰 Custom Font Size:
-
 
 # Following Android component you will learn:
 - Kotlin
@@ -61,12 +62,6 @@ Tasks app is todo list, planner & task app for managing and organizing your dail
 - Widgets
 - Share task
 - Sorting 
-
-# Contribution
-You can contribute this project. Just Solve issue or update code and raise PR. I'll do code review and merge your changes into main branch.
-
-- See Commit message guidelines https://initialcommit.com/blog/git-commit-messages-best-practices.
-- Guidlines to create pull request [feature_name]_#your_nickname this should be the branch name.
 
 # Licence
 Copyright 2025 Ye Naing
