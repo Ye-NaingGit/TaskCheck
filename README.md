@@ -1,4 +1,4 @@
-# Task App
+# TaskCheck App
 TaskCheck app is todo list, planner & task app for managing and organizing your daily tasks, to-do lists, notes, reminders, checklists, calendar events, grocery lists, and much more.
 
 # Screenshots
