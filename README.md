@@ -3,11 +3,11 @@ TaskCheck app is todo list, planner & task app for managing and organizing your 
 
 # Screenshots
 
-<img width="392" height="872" alt="image" src="https://github.com/user-attachments/assets/ea209326-b528-4c4d-922a-594e44dc8245" />
-<img width="387" height="882" alt="image" src="https://github.com/user-attachments/assets/d7f03ae7-8d69-428e-bb97-67916f17553e" />
-<img width="391" height="885" alt="image" src="https://github.com/user-attachments/assets/4b5af023-0f10-4531-94f8-edaaf198e152" />
-<img width="393" height="877" alt="image" src="https://github.com/user-attachments/assets/ccd999b4-3ae8-41c4-a024-00cd8c2ac710" />
-<img width="391" height="882" alt="image" src="https://github.com/user-attachments/assets/75a6cba0-65b5-4d5c-9506-1569aa491766" />
+<img width="196" height="436" alt="image" src="https://github.com/user-attachments/assets/ea209326-b528-4c4d-922a-594e44dc8245" />
+<img width="196" height="436" alt="image" src="https://github.com/user-attachments/assets/d7f03ae7-8d69-428e-bb97-67916f17553e" />
+<img width="196" height="436" alt="image" src="https://github.com/user-attachments/assets/4b5af023-0f10-4531-94f8-edaaf198e152" />
+<img width="196" height="436" alt="image" src="https://github.com/user-attachments/assets/ccd999b4-3ae8-41c4-a024-00cd8c2ac710" />
+<img width="196" height="436" alt="image" src="https://github.com/user-attachments/assets/75a6cba0-65b5-4d5c-9506-1569aa491766" />
 
 # Video
 
