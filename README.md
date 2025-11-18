@@ -1,9 +1,13 @@
-# Task App
-Tasks app is todo list, planner & task app for managing and organizing your daily tasks, to-do lists, notes, reminders, checklists, calendar events, grocery lists, and much more.
+# TaskCheck App
+TaskCheck app is todo list, planner & task app for managing and organizing your daily tasks, to-do lists, notes, reminders, checklists, calendar events, grocery lists, and much more.
 
 # Screenshots
 
-
+<img width="196" height="436" alt="image" src="https://github.com/user-attachments/assets/ea209326-b528-4c4d-922a-594e44dc8245" />
+<img width="196" height="436" alt="image" src="https://github.com/user-attachments/assets/d7f03ae7-8d69-428e-bb97-67916f17553e" />
+<img width="196" height="436" alt="image" src="https://github.com/user-attachments/assets/4b5af023-0f10-4531-94f8-edaaf198e152" />
+<img width="196" height="436" alt="image" src="https://github.com/user-attachments/assets/ccd999b4-3ae8-41c4-a024-00cd8c2ac710" />
+<img width="196" height="436" alt="image" src="https://github.com/user-attachments/assets/75a6cba0-65b5-4d5c-9506-1569aa491766" />
 
 # Video
 
@@ -13,6 +17,8 @@ Tasks app is todo list, planner & task app for managing and organizing your dail
 🌈📂 Categories by Colors
 
 🔗🌐📞Link to Open URL and Call
+
+Keep streaks and productivity scores to encourage task completion
 
 📈 Progress View
 
@@ -27,7 +33,6 @@ Tasks app is todo list, planner & task app for managing and organizing your dail
 ⏰🔔 Reminders & Notifications:
 
 🅰 Custom Font Size:
-
 
 # Following Android component you will learn:
 - Kotlin
@@ -61,12 +66,6 @@ Tasks app is todo list, planner & task app for managing and organizing your dail
 - Widgets
 - Share task
 - Sorting 
-
-# Contribution
-You can contribute this project. Just Solve issue or update code and raise PR. I'll do code review and merge your changes into main branch.
-
-- See Commit message guidelines https://initialcommit.com/blog/git-commit-messages-best-practices.
-- Guidlines to create pull request [feature_name]_#your_nickname this should be the branch name.
 
 # Licence
 Copyright 2025 Ye Naing
