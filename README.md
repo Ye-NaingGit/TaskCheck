@@ -11,7 +11,7 @@ TaskCheck app is todo list, planner & task app for managing and organizing your 
 
 # Video
 
-<video src="https://github.com/Ye-NaingGit/TaskCheck/blob/main/TaskCheckDemo.mp4" width="352" height="720"></video>
+https://github.com/Ye-NaingGit/TaskCheck/blob/main/TaskCheckDemo.mp4
 
 # Special Features:
 🗓️ ALL-IN-ONE PLANNER FOR GETTING THINGS DONE
