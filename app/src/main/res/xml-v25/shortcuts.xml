@@ -8,7 +8,7 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:data="tasks://apps.com.lahsuak.apps.tasks/edittask/true"
-            android:targetClass="com.lahsuak.apps.tasks.ui.MainActivity"
-            android:targetPackage="com.lahsuak.apps.tasks"/>
+            android:targetClass="com.yenaing.apps.tasks.ui.MainActivity"
+            android:targetPackage="com.yenaing.apps.tasks"/>
     </shortcut>
 </shortcuts>

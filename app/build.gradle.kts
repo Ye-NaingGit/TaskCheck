@@ -7,10 +7,10 @@ plugins {
 
 android {
     compileSdk = 34
-    namespace = "com.lahsuak.apps.tasks"
+    namespace = "com.yenaing.apps.tasks"
 
     defaultConfig {
-        applicationId = "com.lahsuak.apps.tasks"
+        applicationId = "com.yenaing.apps.tasks"
         minSdk = 21
         targetSdk = 34
         versionCode = 27
