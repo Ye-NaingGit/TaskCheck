@@ -36,7 +36,7 @@ Keep streaks and productivity scores to encourage task completion
 
 🅰 Custom Font Size:
 
-# Following Android component you will learn:
+# Android component:
 - Kotlin
 - Jetpack Compose
 - Jetpack Compose Navigation
